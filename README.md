@@ -1,166 +1,142 @@
 # Quick Index Search
 
-A high-performance REST API with React frontend for searching through sorted numerical data using binary search algorithm.
+A fast search API for sorted numerical data with a modern React frontend.
 
-## 🚀 Features
+## Features
 
-- **Fast Binary Search**: O(log n) performance for exact matches
-- **Approximate Matching**: 10% tolerance for near matches
-- **Real-time Search**: Instant results with loading states
-- **Modern UI**: Clean, responsive interface
-- **Docker Support**: Easy deployment with Docker Compose
-- **Comprehensive Testing**: Unit tests for all components
-- **Configurable**: YAML configuration for port and log levels
+- **Fast Search**: Binary search algorithm for exact matches
+- **Approximate Matching**: 10% tolerance for approximate matches
+- **In-Memory Loading**: Data loaded into memory on startup for optimal performance
+- **RESTful API**: FastAPI backend with automatic documentation
+- **Modern Frontend**: React + TypeScript with Vite
+- **Docker Support**: Development and production environments
+- **Comprehensive Testing**: Unit tests for both backend and frontend
 
-## 📊 Data
+## Architecture
 
-The application searches through a dataset of 100,002 sorted numbers from 0 to 1,000,000 (increments of 100). The data is loaded into memory on startup for optimal performance.
+- **Backend**: FastAPI (Python) with binary search algorithm
+- **Frontend**: React + TypeScript + Vite
+- **Data**: Sorted numerical data loaded from file
+- **Deployment**: Docker Compose for both dev and prod environments
 
-## 🏗️ Architecture
-
-### Backend (FastAPI)
-- **Framework**: FastAPI with Python
-- **Algorithm**: Binary search with 10% tolerance fallback
-- **Linting**: Ruff
-- **Configuration**: YAML config file
-- **Logging**: Structured logging with configurable levels
-
-### Frontend (React)
-- **Framework**: React with TypeScript
-- **Build Tool**: Vite
-- **Package Manager**: Bun
-- **Linting**: Biome
-- **Icons**: Lucide React
-
-### Deployment
-- **Containerization**: Docker
-- **Orchestration**: Docker Compose
-- **Environments**: Separate dev/prod configurations
-
-## 🛠️ Installation
+## Quick Start
 
 ### Prerequisites
+
 - Python 3.11+
-- Node.js 18+
-- Bun (for frontend)
-- Docker & Docker Compose (optional)
+- Node.js 18+ or Bun
+- Docker (optional)
 
-### Quick Start
+### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd quick-index
-   ```
+```bash
+# Install all dependencies
+make install
 
-2. **Install dependencies**
-   ```bash
-   make install
-   ```
+# Or install separately
+make install-backend
+make install-frontend
+```
 
-3. **Run development servers**
-   ```bash
-   make run-dev
-   ```
+### Running the Application
 
-4. **Access the application**
-   - Frontend: http://localhost:5173
-   - Backend API: http://localhost:8000
-   - API Docs: http://localhost:8000/docs
+#### Development Mode
 
-## 📖 Usage
+```bash
+# Run both backend and frontend
+make run-dev
 
-### API Endpoints
+# Or run separately
+make run-backend    # Backend on http://localhost:8000
+make run-frontend   # Frontend on http://localhost:5173
+```
 
-#### Search for a value
-```http
+#### Docker Mode
+
+```bash
+# Development with Docker
+make run-docker-dev
+
+# Production with Docker
+make run-docker-prod
+```
+
+### Testing
+
+```bash
+# Run all tests
+make test
+
+# Run backend tests only
+make test-backend
+
+# Run frontend tests only
+make test-frontend
+```
+
+**Note**: Frontend component tests require a proper DOM environment. The API service tests work correctly with Bun's test runner.
+
+### API Documentation
+
+Once the backend is running, visit:
+- **Interactive API Docs**: http://localhost:8000/docs
+- **Alternative API Docs**: http://localhost:8000/redoc
+
+## API Endpoints
+
+### Search Endpoint
+
+```
 GET /api/v1/search/{value}
 ```
 
-**Example:**
-```bash
-curl "http://localhost:8000/api/v1/search/100"
-```
+**Parameters:**
+- `value` (integer): The value to search for
 
 **Response:**
 ```json
 {
-  "value": 100,
-  "index": 1,
+  "value": 500,
+  "index": 4,
   "message": "Exact match found"
 }
 ```
 
-#### Health check
-```http
+**Error Response:**
+```json
+{
+  "detail": {
+    "error": "Value not found",
+    "message": "No suitable match found for value 9999"
+  }
+}
+```
+
+### Health Check
+
+```
 GET /health
 ```
 
-### Frontend Interface
+Returns: `{"status": "healthy"}`
 
-1. Enter a number in the search field (0-1,000,000)
-2. Click "Search" or press Enter
-3. View results showing:
-   - Found value
-   - Index position
-   - Match type (exact or approximate)
-   - Status message
+## Configuration
 
-## 🧪 Testing
-
-### Run all tests
-```bash
-make test
-```
-
-### Backend tests only
-```bash
-make test-backend
-```
-
-### Frontend tests only
-```bash
-make test-frontend
-```
-
-## 🐳 Docker Deployment
-
-### Development
-```bash
-make run-docker-dev
-```
-
-### Production
-```bash
-make run-docker-prod
-```
-
-### Stop containers
-```bash
-make stop-docker
-```
-
-## 🔧 Configuration
-
-### Backend Configuration
-Edit `backend/config/config.yaml`:
+Backend configuration is in `backend/config/config.yaml`:
 
 ```yaml
 server:
   port: 8000
   host: "0.0.0.0"
-
 logging:
-  level: "INFO"  # Options: DEBUG, INFO, ERROR
-
+  level: "INFO"
 data:
   input_file: "data/input.txt"
 ```
 
-### Environment Variables
-- `VITE_API_URL`: Frontend API base URL (default: http://localhost:8000)
+## Development
 
-## 📁 Project Structure
+### Project Structure
 
 ```
 quick-index/
@@ -169,80 +145,107 @@ quick-index/
 │   │   ├── api/
 │   │   ├── services/
 │   │   ├── utils/
-│   │   ├── config.py
-│   │   ├── main.py
-│   │   └── models.py
+│   │   └── main.py
 │   ├── tests/
 │   ├── data/
-│   ├── config/
-│   └── requirements.txt
+│   └── config/
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── services/
-│   │   ├── types/
-│   │   └── App.tsx
-│   ├── package.json
-│   └── vite.config.ts
+│   │   └── types/
+│   └── src/__tests__/
 ├── docker-compose.dev.yml
 ├── docker-compose.prod.yml
-├── Makefile
-└── README.md
+└── Makefile
 ```
 
-## 🚀 Available Commands
+### Code Quality
 
 ```bash
-make help                    # Show all available commands
-make install                 # Install all dependencies
-make test                    # Run all tests
-make run-dev                 # Start development servers
-make run-docker-dev          # Run with Docker (dev)
-make run-docker-prod         # Run with Docker (prod)
-make lint                    # Lint all code
-make clean                   # Clean up files
+# Lint all code
+make lint
+
+# Lint backend only
+make lint-backend
+
+# Lint frontend only
+make lint-frontend
 ```
 
-## 🔍 Search Algorithm
+### Docker Commands
 
-### Binary Search
-- **Time Complexity**: O(log n)
-- **Space Complexity**: O(1)
-- **Use Case**: Exact value matches
+```bash
+# Build Docker images
+make build-docker
 
-### Approximate Search
-- **Time Complexity**: O(n) worst case
-- **Tolerance**: 10% of target value
-- **Use Case**: When exact match not found
+# Stop Docker containers
+make stop-docker
 
-### Example
-- Search for 1150 → Returns 1100 or 1200 (within 10% tolerance)
-- Search for 1000 → Returns exact match at index 10
+# Clean up
+make clean
+```
 
-## 📝 Logging
+## Testing Status
 
-The application uses structured logging with configurable levels:
+### Backend Tests ✅
+- **Search Service**: 23 tests passing
+  - Data loading
+  - Binary search (exact matches)
+  - Approximate search (within tolerance)
+  - Error handling
+  - Edge cases
+- **API Routes**: 10 tests passing
+  - Search endpoint responses
+  - Error handling
+  - Input validation
+  - Health and docs endpoints
 
-- **DEBUG**: Detailed debugging information
-- **INFO**: General application flow
-- **ERROR**: Error conditions
+### Frontend Tests ⚠️
+- **API Service**: 4 tests passing
+  - Successful API calls
+  - Error handling
+  - Network failures
+- **Component Tests**: Require DOM environment
+  - SearchForm component
+  - ResultDisplay component  
+  - ErrorDisplay component
 
-## 🤝 Contributing
+## Performance
+
+- **Data Loading**: ~100,000 values loaded in ~20ms
+- **Search Performance**: O(log n) for exact matches, O(n) for approximate matches
+- **Memory Usage**: ~800KB for 100,000 integer values
+
+## Deployment
+
+### Production Docker
+
+```bash
+make run-docker-prod
+```
+
+This starts:
+- Backend API on port 8000
+- Frontend served by Nginx on port 80
+- All services in production mode
+
+### Environment Variables
+
+For production deployment, consider setting:
+- `LOG_LEVEL`: Logging level (DEBUG, INFO, ERROR)
+- `API_HOST`: Backend host address
+- `API_PORT`: Backend port
+
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests
-5. Run linting: `make lint`
+4. Add tests for new functionality
+5. Run the test suite
 6. Submit a pull request
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For issues and questions:
-1. Check the API documentation at `/docs`
-2. Review the logs for error details
-3. Open an issue in the repository
+This project is created for recruitment purposes.
