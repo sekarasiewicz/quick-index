@@ -3,12 +3,12 @@ import { Search } from 'lucide-react';
 import { ApiService } from '../services/api';
 import type { SearchResponse } from '../types';
 
-interface SearchFormProps {
+type SearchFormProps = {
   onResult: (result: SearchResponse) => void;
   onError: (error: string) => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
-}
+};
 
 export function SearchForm({ onResult, onError, isLoading, setIsLoading }: SearchFormProps) {
   const [value, setValue] = useState('');

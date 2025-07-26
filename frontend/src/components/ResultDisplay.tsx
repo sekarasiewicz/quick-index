@@ -1,9 +1,9 @@
 import { CheckCircle, AlertCircle } from 'lucide-react';
 import type { SearchResponse } from '../types';
 
-interface ResultDisplayProps {
+type ResultDisplayProps = {
   result: SearchResponse;
-}
+};
 
 export function ResultDisplay({ result }: ResultDisplayProps) {
   const isExactMatch = result.message.includes('Exact match');

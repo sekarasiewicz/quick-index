@@ -1,14 +1,14 @@
-export interface SearchResponse {
+export type SearchResponse = {
   value: number;
   index: number;
   message: string;
-}
+};
 
-export interface ErrorResponse {
+export type ErrorResponse = {
   error: string;
   message: string;
-}
+};
 
-export interface ApiError {
+export type ApiError = {
   detail: ErrorResponse;
-} 
+}; 
