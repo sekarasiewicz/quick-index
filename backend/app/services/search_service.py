@@ -86,7 +86,7 @@ class SearchService:
             return (
                 closest_value,
                 closest_index,
-                f"Approximate match within 10% tolerance",
+                "Approximate match within 10% tolerance",
             )
 
         # No match found
