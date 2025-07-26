@@ -1,215 +1,248 @@
-# Number Search Service
+# Quick Index Search
 
-A REST API service with React frontend for efficiently searching values in a sorted dataset using binary search algorithm.
+A high-performance REST API with React frontend for searching through sorted numerical data using binary search algorithm.
 
-## Features
+## 🚀 Features
 
-- **Fast Binary Search**: O(log n) search algorithm for optimal performance
-- **Approximate Matching**: Returns closest match within 10% tolerance if exact match not found
-- **Configurable**: YAML configuration for port, log level, and input file
-- **Comprehensive Logging**: Configurable log levels (DEBUG, INFO, ERROR)
-- **Unit Tests**: Complete test coverage for core functionality
-- **React Frontend**: Interactive UI to demonstrate API functionality
-- **Health Check**: Endpoint to verify service status
+- **Fast Binary Search**: O(log n) performance for exact matches
+- **Approximate Matching**: 10% tolerance for near matches
+- **Real-time Search**: Instant results with loading states
+- **Modern UI**: Clean, responsive interface
+- **Docker Support**: Easy deployment with Docker Compose
+- **Comprehensive Testing**: Unit tests for all components
+- **Configurable**: YAML configuration for port and log levels
 
-## Project Structure
+## 📊 Data
 
-```
-├── backend/
-│   ├── app.py              # Main Flask application
-│   ├── config.yaml         # Configuration file
-│   ├── requirements.txt    # Python dependencies
-│   └── test_app.py        # Unit tests
-├── frontend/
-│   ├── src/
-│   │   ├── App.js         # Main React component
-│   │   ├── App.css        # Styling
-│   │   ├── index.js       # React entry point
-│   │   └── index.css      # Global styles
-│   ├── public/
-│   │   └── index.html     # HTML template
-│   └── package.json       # Node.js dependencies
-├── input.txt              # Sample sorted data file
-├── Makefile              # Automation commands
-└── README.md             # This file
-```
+The application searches through a dataset of 100,002 sorted numbers from 0 to 1,000,000 (increments of 100). The data is loaded into memory on startup for optimal performance.
 
-## API Endpoints
+## 🏗️ Architecture
 
-### Search Endpoint
-- **URL**: `GET /search/<value>`
-- **Description**: Search for a value and return its index
-- **Response**: 
-  ```json
-  {
-    "success": true,
-    "data": {
-      "index": 3,
-      "value": 100,
-      "message": "Exact match found"
-    }
-  }
-  ```
+### Backend (FastAPI)
+- **Framework**: FastAPI with Python
+- **Algorithm**: Binary search with 10% tolerance fallback
+- **Linting**: Ruff
+- **Configuration**: YAML config file
+- **Logging**: Structured logging with configurable levels
 
-### Health Check
-- **URL**: `GET /health`
-- **Description**: Check service health and data status
-- **Response**:
-  ```json
-  {
-    "status": "healthy",
-    "data_loaded": true,
-    "total_values": 52
-  }
-  ```
+### Frontend (React)
+- **Framework**: React with TypeScript
+- **Build Tool**: Vite
+- **Package Manager**: Bun
+- **Linting**: Biome
+- **Icons**: Lucide React
 
-## Setup and Installation
+### Deployment
+- **Containerization**: Docker
+- **Orchestration**: Docker Compose
+- **Environments**: Separate dev/prod configurations
+
+## 🛠️ Installation
 
 ### Prerequisites
-- Python 3.7+
-- Node.js 14+
-- npm or yarn
+- Python 3.11+
+- Node.js 18+
+- Bun (for frontend)
+- Docker & Docker Compose (optional)
 
-### Backend Setup
+### Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd quick-index
+   ```
+
+2. **Install dependencies**
+   ```bash
+   make install
+   ```
+
+3. **Run development servers**
+   ```bash
+   make run-dev
+   ```
+
+4. **Access the application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:8000
+   - API Docs: http://localhost:8000/docs
+
+## 📖 Usage
+
+### API Endpoints
+
+#### Search for a value
+```http
+GET /api/v1/search/{value}
+```
+
+**Example:**
 ```bash
-# Install Python dependencies
-make install
-
-# Or manually:
-cd backend
-pip install -r requirements.txt
+curl "http://localhost:8000/api/v1/search/100"
 ```
 
-### Frontend Setup
-```bash
-# Install Node.js dependencies
-make setup-frontend
-
-# Or manually:
-cd frontend
-npm install
+**Response:**
+```json
+{
+  "value": 100,
+  "index": 1,
+  "message": "Exact match found"
+}
 ```
 
-### Complete Setup
-```bash
-# Setup both backend and frontend
-make setup
+#### Health check
+```http
+GET /health
 ```
 
-## Running the Application
+### Frontend Interface
 
-### Start Backend Only
-```bash
-make run
-# Backend will be available at http://localhost:5000
-```
+1. Enter a number in the search field (0-1,000,000)
+2. Click "Search" or press Enter
+3. View results showing:
+   - Found value
+   - Index position
+   - Match type (exact or approximate)
+   - Status message
 
-### Start Frontend Only
-```bash
-make run-frontend
-# Frontend will be available at http://localhost:3000
-```
+## 🧪 Testing
 
-### Start Both Services
-```bash
-make start-all
-```
-
-## Configuration
-
-Edit `backend/config.yaml` to customize:
-
-```yaml
-port: 5000                # Server port
-log_level: INFO          # Log level: DEBUG, INFO, ERROR
-input_file: ../input.txt # Path to sorted data file
-```
-
-## Testing
-
-Run unit tests:
+### Run all tests
 ```bash
 make test
 ```
 
-This will run all unit tests including:
-- Binary search functionality
-- Approximate matching logic
-- API endpoint testing
-- Configuration loading
-- Error handling
+### Backend tests only
+```bash
+make test-backend
+```
 
-## Algorithm Details
+### Frontend tests only
+```bash
+make test-frontend
+```
 
-### Binary Search Implementation
+## 🐳 Docker Deployment
+
+### Development
+```bash
+make run-docker-dev
+```
+
+### Production
+```bash
+make run-docker-prod
+```
+
+### Stop containers
+```bash
+make stop-docker
+```
+
+## 🔧 Configuration
+
+### Backend Configuration
+Edit `backend/config/config.yaml`:
+
+```yaml
+server:
+  port: 8000
+  host: "0.0.0.0"
+
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, ERROR
+
+data:
+  input_file: "data/input.txt"
+```
+
+### Environment Variables
+- `VITE_API_URL`: Frontend API base URL (default: http://localhost:8000)
+
+## 📁 Project Structure
+
+```
+quick-index/
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   ├── config.py
+│   │   ├── main.py
+│   │   └── models.py
+│   ├── tests/
+│   ├── data/
+│   ├── config/
+│   └── requirements.txt
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── services/
+│   │   ├── types/
+│   │   └── App.tsx
+│   ├── package.json
+│   └── vite.config.ts
+├── docker-compose.dev.yml
+├── docker-compose.prod.yml
+├── Makefile
+└── README.md
+```
+
+## 🚀 Available Commands
+
+```bash
+make help                    # Show all available commands
+make install                 # Install all dependencies
+make test                    # Run all tests
+make run-dev                 # Start development servers
+make run-docker-dev          # Run with Docker (dev)
+make run-docker-prod         # Run with Docker (prod)
+make lint                    # Lint all code
+make clean                   # Clean up files
+```
+
+## 🔍 Search Algorithm
+
+### Binary Search
 - **Time Complexity**: O(log n)
 - **Space Complexity**: O(1)
-- **Tolerance**: 10% for approximate matches
+- **Use Case**: Exact value matches
 
-### Search Logic
-1. Load sorted data into memory slice at startup
-2. Use binary search for exact match
-3. If no exact match, check neighbors within 10% tolerance
-4. Return closest match or error if none found
+### Approximate Search
+- **Time Complexity**: O(n) worst case
+- **Tolerance**: 10% of target value
+- **Use Case**: When exact match not found
 
-## Usage Examples
+### Example
+- Search for 1150 → Returns 1100 or 1200 (within 10% tolerance)
+- Search for 1000 → Returns exact match at index 10
 
-### Using the API directly
-```bash
-# Search for exact value
-curl http://localhost:5000/search/100
+## 📝 Logging
 
-# Search for approximate value
-curl http://localhost:5000/search/105
+The application uses structured logging with configurable levels:
 
-# Health check
-curl http://localhost:5000/health
-```
+- **DEBUG**: Detailed debugging information
+- **INFO**: General application flow
+- **ERROR**: Error conditions
 
-### Using the Frontend
-1. Open http://localhost:3000
-2. Enter a number in the search field
-3. Click "Search" to see results
-4. View index, value, and match type
+## 🤝 Contributing
 
-## Sample Data
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Run linting: `make lint`
+6. Submit a pull request
 
-The `input.txt` file contains sorted numbers:
-```
-0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, ...
-```
+## 📄 License
 
-## Error Handling
+This project is licensed under the MIT License.
 
-- **404**: Value not found within tolerance
-- **500**: Internal server error
-- **Invalid input**: Non-numeric values rejected
+## 🆘 Support
 
-## Development
-
-### Adding New Features
-1. Update the `SearchService` class in `app.py`
-2. Add corresponding tests in `test_app.py`
-3. Update frontend components if needed
-4. Run tests to ensure functionality
-
-### Logging
-Configure log levels in `config.yaml`:
-- **DEBUG**: Detailed search operations
-- **INFO**: General service information
-- **ERROR**: Error messages only
-
-## Performance
-
-- **Startup**: O(n) to load data into memory
-- **Search**: O(log n) binary search
-- **Memory**: O(n) to store sorted data slice
-
-For 1M values:
-- Load time: ~100ms
-- Search time: ~20 operations maximum
-- Memory usage: ~8MB for integer array
-
-## License
-
-This project is provided as-is for demonstration purposes.
+For issues and questions:
+1. Check the API documentation at `/docs`
+2. Review the logs for error details
+3. Open an issue in the repository

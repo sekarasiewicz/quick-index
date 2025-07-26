@@ -1,43 +1,58 @@
-.PHONY: install test run clean setup-frontend run-frontend
+.PHONY: help install-backend install-frontend test-backend test-frontend run-backend run-frontend build-docker run-docker-dev run-docker-prod clean
 
-# Backend commands
-install:
-	cd backend && pip install -r requirements.txt
+help: ## Show this help message
+	@echo 'Usage: make [target]'
+	@echo ''
+	@echo 'Targets:'
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  %-15s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-test:
-	cd backend && python -m pytest test_app.py -v
+install-backend: ## Install backend dependencies
+	cd backend && python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt
 
-run:
-	cd backend && python app.py
+install-frontend: ## Install frontend dependencies
+	cd frontend && bun install
 
-clean:
-	find . -type f -name "*.pyc" -delete
-	find . -type d -name "__pycache__" -delete
+install: install-backend install-frontend ## Install all dependencies
 
-# Frontend commands
-setup-frontend:
-	cd frontend && npm install
+test-backend: ## Run backend tests
+	cd backend && source venv/bin/activate && python -m pytest tests/ -v
 
-run-frontend:
-	cd frontend && npm start
+test-frontend: ## Run frontend tests
+	cd frontend && bun test
 
-# Combined commands
-setup: install setup-frontend
-	@echo "Setup complete!"
+test: test-backend test-frontend ## Run all tests
 
-start-all: 
-	@echo "Starting backend..."
-	cd backend && python app.py &
-	@echo "Starting frontend..."
-	cd frontend && npm start
+run-backend: ## Run backend development server
+	cd backend && source venv/bin/activate && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
-help:
-	@echo "Available commands:"
-	@echo "  install        - Install Python dependencies"
-	@echo "  test          - Run unit tests"
-	@echo "  run           - Start the backend service"
-	@echo "  clean         - Clean Python cache files"
-	@echo "  setup-frontend - Install frontend dependencies"
-	@echo "  run-frontend  - Start React frontend"
-	@echo "  setup         - Setup both backend and frontend"
-	@echo "  start-all     - Start both services"
+run-frontend: ## Run frontend development server
+	cd frontend && bun run dev
+
+run-dev: run-backend run-frontend ## Run both development servers
+
+build-docker: ## Build Docker images
+	docker-compose -f docker-compose.prod.yml build
+
+run-docker-dev: ## Run development environment with Docker
+	docker-compose -f docker-compose.dev.yml up --build
+
+run-docker-prod: ## Run production environment with Docker
+	docker-compose -f docker-compose.prod.yml up --build -d
+
+stop-docker: ## Stop Docker containers
+	docker-compose -f docker-compose.dev.yml down
+	docker-compose -f docker-compose.prod.yml down
+
+clean: ## Clean up generated files
+	rm -rf backend/venv
+	rm -rf frontend/node_modules
+	rm -rf frontend/dist
+	docker system prune -f
+
+lint-backend: ## Lint backend code
+	cd backend && source venv/bin/activate && ruff check app/
+
+lint-frontend: ## Lint frontend code
+	cd frontend && bunx @biomejs/biome check src/
+
+lint: lint-backend lint-frontend ## Lint all code
