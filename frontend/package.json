@@ -9,9 +9,9 @@
     "lint": "biome lint .",
     "format": "biome format .",
     "preview": "vite preview",
-    "test": "bunx vitest --run",
-    "test:watch": "bunx vitest --watch",
-    "test:coverage": "bunx vitest --coverage --run"
+    "test": "vitest --run",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage --run"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.0",
