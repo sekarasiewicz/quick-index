@@ -1,5 +1,5 @@
-import { ApiService } from '../services/api'
-import type { SearchResponse } from '../types'
+import { ApiService } from '@/services/api'
+import type { SearchResponse } from '@/types'
 
 // Mock fetch globally
 global.fetch = jest.fn()

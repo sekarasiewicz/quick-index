@@ -1,7 +1,8 @@
+import { Button } from '@chakra-ui/react'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
-import { ApiService } from '../services/api'
-import type { SearchResponse } from '../types'
+import { ApiService } from '@/services/api'
+import type { SearchResponse } from '@/types'
 
 type SearchFormProps = {
   onResult: (result: SearchResponse) => void
@@ -57,10 +58,10 @@ export function SearchForm({
           disabled={isLoading}
           className="search-input"
         />
-        <button type="submit" disabled={isLoading} className="search-button">
+        <Button type="submit" disabled={isLoading} className="search-button">
           <Search size={20} />
           {isLoading ? 'Searching...' : 'Search'}
-        </button>
+        </Button>
       </div>
     </form>
   )

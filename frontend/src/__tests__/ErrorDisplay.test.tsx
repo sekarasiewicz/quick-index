@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { ErrorDisplay } from '../components/ErrorDisplay'
+import { ErrorDisplay } from '@/components/ErrorDisplay'
 
 describe('ErrorDisplay', () => {
   it('renders error message correctly', () => {

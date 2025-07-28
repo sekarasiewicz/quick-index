@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react'
-import { SearchForm } from '../components/SearchForm'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { SearchForm } from '@/components/SearchForm'
 
 // Mock fetch globally
 global.fetch = jest.fn()

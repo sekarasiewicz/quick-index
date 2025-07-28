@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { ResultDisplay } from '../components/ResultDisplay'
-import type { SearchResponse } from '../types'
+import { ResultDisplay } from '@/components/ResultDisplay'
+import type { SearchResponse } from '@/types'
 
 describe('ResultDisplay', () => {
   it('renders exact match result correctly', () => {
