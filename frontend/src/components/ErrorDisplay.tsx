@@ -1,8 +1,8 @@
-import { XCircle } from 'lucide-react';
+import { XCircle } from 'lucide-react'
 
 type ErrorDisplayProps = {
-  error: string;
-};
+  error: string
+}
 
 export function ErrorDisplay({ error }: ErrorDisplayProps) {
   return (
@@ -11,8 +11,8 @@ export function ErrorDisplay({ error }: ErrorDisplayProps) {
         <XCircle size={24} color="red" />
         <h3>Error</h3>
       </div>
-      
+
       <p className="error-message">{error}</p>
     </div>
-  );
-} 
+  )
+}
