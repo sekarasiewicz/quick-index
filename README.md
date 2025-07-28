@@ -23,58 +23,24 @@ A fast search API for sorted numerical data with a modern React frontend.
 
 ### Prerequisites
 
-- Python 3.11+
-- Node.js 18+ or Bun
-- Docker (optional)
-
-### Installation
-
-```bash
-# Install all dependencies
-make install
-
-# Or install separately
-make install-backend
-make install-frontend
-```
+- Docker
+- Docker Compose
 
 ### Running the Application
 
 #### Development Mode
 
 ```bash
-# Run both backend and frontend
-make run-dev
-
-# Or run separately
-make run-backend    # Backend on http://localhost:8000
-make run-frontend   # Frontend on http://localhost:5173
+# Run development environment with Docker
+make run-docker-dev
 ```
 
-#### Docker Mode
+#### Production Mode
 
 ```bash
-# Development with Docker
-make run-docker-dev
-
-# Production with Docker
+# Run production environment with Docker
 make run-docker-prod
 ```
-
-### Testing
-
-```bash
-# Run all tests
-make test
-
-# Run backend tests only
-make test-backend
-
-# Run frontend tests only
-make test-frontend
-```
-
-**Note**: Frontend component tests require a proper DOM environment. The API service tests work correctly with Bun's test runner.
 
 ### API Documentation
 
@@ -158,19 +124,6 @@ quick-index/
 ├── docker-compose.dev.yml
 ├── docker-compose.prod.yml
 └── Makefile
-```
-
-### Code Quality
-
-```bash
-# Lint all code
-make lint
-
-# Lint backend only
-make lint-backend
-
-# Lint frontend only
-make lint-frontend
 ```
 
 ### Docker Commands
