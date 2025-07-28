@@ -73,7 +73,7 @@ describe('ResultDisplay', () => {
 
     // Test that numbers are formatted (with any locale format)
     expect(
-      screen.getByText((content, element) => {
+      screen.getByText((_, element) => {
         return (
           element?.textContent === '1,000,000' ||
           element?.textContent === '1 000 000'
@@ -82,7 +82,7 @@ describe('ResultDisplay', () => {
     ).toBeInTheDocument()
 
     expect(
-      screen.getByText((content, element) => {
+      screen.getByText((_, element) => {
         return (
           element?.textContent === '50,000' || element?.textContent === '50 000'
         )
