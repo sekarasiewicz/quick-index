@@ -1,11 +1,13 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Search } from 'lucide-react'
-import { useId, useState } from 'react'
-import { ApiService } from '../services/api'
-import type { SearchResponse } from '../types'
+import { useForm } from 'react-hook-form'
+import { type SearchFormData, searchSchema } from '@/lib/schemas'
+import { ApiService } from '@/services/api'
+import type { SearchResponse } from '@/types'
 import { Button } from './ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
-import { Input } from './ui/input'
-import { Label } from './ui/label'
+import { Form } from './ui/form'
+import { SearchInput } from './ui/search-input'
 
 type SearchFormProps = {
   onResult: (result: SearchResponse) => void
@@ -20,22 +22,15 @@ export function SearchForm({
   isLoading,
   setIsLoading,
 }: SearchFormProps) {
-  const [value, setValue] = useState('')
-  const searchInputId = useId()
+  const form = useForm<SearchFormData>({
+    resolver: zodResolver(searchSchema),
+    defaultValues: {
+      searchValue: '',
+    },
+  })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!value.trim()) {
-      onError('Please enter a value to search for')
-      return
-    }
-
-    const numValue = parseInt(value, 10)
-    if (Number.isNaN(numValue)) {
-      onError('Please enter a valid number')
-      return
-    }
+  const onSubmit = async (data: SearchFormData) => {
+    const numValue = parseInt(data.searchValue, 10)
 
     setIsLoading(true)
     try {
@@ -56,24 +51,15 @@ export function SearchForm({
         <CardTitle>Search for a value in the dataset</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor={searchInputId}>Search Value</Label>
-            <Input
-              id={searchInputId}
-              name="searchValue"
-              type="number"
-              placeholder="Enter a value (0-1000000)"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              disabled={isLoading}
-            />
-          </div>
-          <Button type="submit" disabled={isLoading} className="w-full">
-            <Search size={20} className="mr-2" />
-            {isLoading ? 'Searching...' : 'Search'}
-          </Button>
-        </form>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <SearchInput control={form.control} disabled={isLoading} />
+            <Button type="submit" disabled={isLoading} className="w-full">
+              <Search size={20} className="mr-2" />
+              {isLoading ? 'Searching...' : 'Search'}
+            </Button>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   )
