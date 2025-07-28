@@ -7,7 +7,6 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
-      - ./input.txt:/app/data/input.txt
     environment:
       - PYTHONPATH=/app
     # Remove the command override since it's now in Dockerfile.dev
