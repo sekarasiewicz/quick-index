@@ -16,6 +16,7 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
           ? 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20'
           : 'border-orange-200 bg-orange-50 dark:border-orange-800 dark:bg-orange-950/20'
       }`}
+      data-testid="result-card"
     >
       <CardHeader className="pb-3">
         <CardTitle
@@ -29,11 +30,13 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
             <CheckCircle
               size={20}
               className="text-green-600 dark:text-green-400"
+              data-testid="check-circle-icon"
             />
           ) : (
             <AlertTriangle
               size={20}
               className="text-orange-600 dark:text-orange-400"
+              data-testid="alert-triangle-icon"
             />
           )}
           {isExactMatch ? 'Exact Match Found!' : 'Approximate Match Found'}

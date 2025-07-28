@@ -1,7 +1,7 @@
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -16,6 +16,18 @@ export default defineConfig({
     port: 5173,
     watch: {
       usePolling: true, // Required for Docker on some systems
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    css: true,
+    watch: false, // Disable watch mode by default
+    environmentOptions: {
+      jsdom: {
+        resources: 'usable',
+      },
     },
   },
 })

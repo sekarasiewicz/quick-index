@@ -1,4 +1,4 @@
-.PHONY: help build-docker run-docker-dev run-docker-prod stop-docker clean
+.PHONY: help build-docker run-docker-dev run-docker-prod stop-docker clean test test-watch test-coverage test-docker test-docker-watch
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
@@ -21,3 +21,18 @@ stop-docker: ## Stop Docker containers
 
 clean: ## Clean up generated files
 	docker system prune -f
+
+test: ## Run frontend tests
+	cd frontend && bun run test
+
+test-watch: ## Run frontend tests in watch mode
+	cd frontend && bun run test:watch
+
+test-coverage: ## Run frontend tests with coverage
+	cd frontend && bun run test:coverage
+
+test-docker: ## Run frontend tests in Docker
+	docker compose -f docker-compose.test.yml up frontend-test --build --abort-on-container-exit
+
+test-docker-watch: ## Run frontend tests in Docker with watch mode
+	docker compose -f docker-compose.test.yml up frontend-test-watch --build
