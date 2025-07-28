@@ -3,7 +3,6 @@ import { ColorModeButton } from './components/ColorModeButton'
 import { ErrorDisplay } from './components/ErrorDisplay'
 import { ResultDisplay } from './components/ResultDisplay'
 import { SearchForm } from './components/SearchForm'
-import './components.css'
 import type { SearchResponse } from './types'
 
 function App() {
