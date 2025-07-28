@@ -22,7 +22,7 @@ A REST service with a single endpoint that efficiently searches for values in a 
 ### Frontend (React)
 - **Framework**: React with TypeScript
 - **Build tool**: Vite
-- **Package manager**: Bun
+- **Package manager**: npm
 - **UI components**: Chakra UI
 - **Linting**: Biome
 - **Icons**: Lucide React
@@ -76,7 +76,7 @@ quick-index/
 │   │   └── main.tsx
 │   ├── public/
 │   ├── package.json
-│   ├── bun.lockb
+│   ├── package-lock.json
 │   ├── vite.config.ts
 │   ├── biome.json
 │   ├── Dockerfile
@@ -131,7 +131,7 @@ quick-index/
 ### Phase 3: Frontend Development (Week 2)
 1. **Project Setup**
    - Initialize React + TypeScript project with Vite
-   - Configure Bun as package manager
+   - Configure npm as package manager
    - Set up Chakra UI
    - Configure Biome for linting
 
@@ -237,3 +237,15 @@ quick-index/
 - **Error Handling**: Comprehensive error handling and logging
 - **Testing**: Thorough unit and integration tests
 - **Documentation**: Clear setup and usage instructions 
+
+## Tech Stack
+
+### Frontend
+- **Framework**: React 19 with TypeScript
+- **Build tool**: Vite
+- **Styling**: Tailwind CSS v4
+- **UI Components**: Radix UI + custom components
+- **Package manager**: npm
+- **Testing**: Vitest + Testing Library
+- **Linting**: Biome
+- **Icons**: Lucide React 

@@ -1,18 +1,18 @@
-FROM oven/bun:1 AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
 # Copy package files
-COPY package.json bun.lock ./
+COPY package*.json ./
 
 # Install dependencies
-RUN bun install
+RUN npm install
 
 # Copy source code
 COPY . .
 
 # Build the application
-RUN bun run build
+RUN npm run build
 
 # Production stage
 FROM caddy:2-alpine

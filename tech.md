@@ -1,6 +1,6 @@
-## Frotend
+# Tech Stack
 
-React application, initialize by vite, with typescript and as package manager I want to use bun.
+React application, initialize by vite, with typescript and as package manager I want to use npm.
 For linting use Biome, for components use Chakra
 
 ## Backend 
