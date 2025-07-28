@@ -3,6 +3,9 @@ import { useId, useState } from 'react'
 import { ApiService } from '../services/api'
 import type { SearchResponse } from '../types'
 import { Button } from './ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
+import { Input } from './ui/input'
+import { Label } from './ui/label'
 
 type SearchFormProps = {
   onResult: (result: SearchResponse) => void
@@ -48,24 +51,30 @@ export function SearchForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <h2>Search for a value in the dataset</h2>
-        <input
-          id={searchInputId}
-          name="searchValue"
-          type="number"
-          className="input"
-          placeholder="Enter a value (0-1000000)"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          disabled={isLoading}
-        />
-        <Button type="submit" disabled={isLoading}>
-          <Search size={20} />
-          {isLoading ? 'Searching...' : 'Search'}
-        </Button>
-      </div>
-    </form>
+    <Card className="w-full max-w-md mx-auto">
+      <CardHeader>
+        <CardTitle>Search for a value in the dataset</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor={searchInputId}>Search Value</Label>
+            <Input
+              id={searchInputId}
+              name="searchValue"
+              type="number"
+              placeholder="Enter a value (0-1000000)"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              disabled={isLoading}
+            />
+          </div>
+          <Button type="submit" disabled={isLoading} className="w-full">
+            <Search size={20} className="mr-2" />
+            {isLoading ? 'Searching...' : 'Search'}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   )
 }
