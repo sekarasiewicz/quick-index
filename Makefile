@@ -1,4 +1,4 @@
-.PHONY: help build-docker run-docker-dev run-docker-prod stop-docker clean test test-watch test-coverage test-docker test-docker-watch
+.PHONY: help build-docker run-docker-dev run-docker-prod stop-docker clean test test-watch test-coverage test-docker test-docker-watch test-backend-docker test-backend-docker-watch
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
@@ -27,3 +27,9 @@ test-docker: ## Run frontend tests in Docker
 
 test-docker-watch: ## Run frontend tests in Docker with watch mode
 	docker compose -f docker-compose.test.yml up frontend-test-watch --build
+
+test-backend-docker: ## Run backend tests in Docker
+	docker compose -f docker-compose.test.yml up backend-test --build --abort-on-container-exit
+
+test-backend-docker-watch: ## Run backend tests in Docker with watch mode
+	docker compose -f docker-compose.test.yml up backend-test-watch --build

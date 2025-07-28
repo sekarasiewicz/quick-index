@@ -32,6 +32,28 @@ services:
     networks:
       - test-network
 
+  backend-test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONPATH=/app
+    command: python -m pytest tests/ -v
+    networks:
+      - test-network
+
+  backend-test-watch:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONPATH=/app
+    command: python -m pytest tests/ -v --tb=short
+    volumes:
+      - ./backend:/app
+    networks:
+      - test-network
+
 networks:
   test-network:
     driver: bridge 
