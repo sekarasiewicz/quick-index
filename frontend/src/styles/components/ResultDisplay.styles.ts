@@ -18,7 +18,6 @@ export const ResultHeader = styled.div`
 export const ResultTitle = styled.h3`
   font-size: 1.5rem;
   font-weight: bold;
-  color: #2d3748;
   margin: 0;
 `
 
