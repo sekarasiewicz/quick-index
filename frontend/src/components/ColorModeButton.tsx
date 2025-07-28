@@ -1,5 +1,6 @@
 import { Moon, Sun } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { Button } from './ui/button'
 
 export function ColorModeButton() {
   const [isDark, setIsDark] = useState(false)
@@ -28,13 +29,15 @@ export function ColorModeButton() {
   }
 
   return (
-    <button
+    <Button
       type="button"
-      className="color-mode-button"
+      variant="ghost"
+      size="icon"
       onClick={toggleColorMode}
+      className="fixed top-4 right-4 z-50"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {isDark ? <Sun size={20} /> : <Moon size={20} />}
-    </button>
+    </Button>
   )
 }

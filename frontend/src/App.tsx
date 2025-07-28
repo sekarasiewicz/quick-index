@@ -21,25 +21,29 @@ function App() {
   }
 
   return (
-    <div className="app-container">
+    <div className="min-h-screen bg-background text-foreground">
       <ColorModeButton />
-      <div className="container">
-        <header className="header">
-          <h1 className="title">Quick Index Search</h1>
-          <p className="subtitle">
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <header className="text-center mb-8">
+          <h1 className="text-4xl font-bold tracking-tight mb-2">
+            Quick Index Search
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Search through 100,000+ sorted numbers with binary search efficiency
           </p>
         </header>
 
-        <SearchForm
-          onResult={handleResult}
-          onError={handleError}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+        <div className="space-y-6">
+          <SearchForm
+            onResult={handleResult}
+            onError={handleError}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
 
-        {result && <ResultDisplay result={result} />}
-        {error && <ErrorDisplay error={error} />}
+          {result && <ResultDisplay result={result} />}
+          {error && <ErrorDisplay error={error} />}
+        </div>
       </div>
     </div>
   )
