@@ -1,12 +1,11 @@
-FROM node:18-alpine AS builder
+FROM oven/bun:1 AS builder
 
 WORKDIR /app
 
 # Copy package files
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 
 # Install dependencies
-RUN npm install -g bun
 RUN bun install
 
 # Copy source code
