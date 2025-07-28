@@ -5,6 +5,7 @@ export const ErrorContainer = styled.div`
   margin: 0 auto;
   padding: 1.5rem;
   border: 1px solid #feb2b2;
+  background-color: #fff3f3;
   border-radius: 0.5rem;
 `
 

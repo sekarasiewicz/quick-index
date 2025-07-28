@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ColorModeButton } from './components/ui/color-mode'
 import { ErrorDisplay } from './components/ErrorDisplay'
 import { ResultDisplay } from './components/ResultDisplay'
 import { SearchForm } from './components/SearchForm'
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <AppContainer>
+      <ColorModeButton position="fixed" top="4" right="4" zIndex="50" />
       <Container>
         <Header>
           <Title>Quick Index Search</Title>
