@@ -1,17 +1,4 @@
-import { Text } from '@chakra-ui/react'
-import { AlertCircle, CheckCircle } from 'lucide-react'
-import {
-  Badge,
-  Divider,
-  Label,
-  ResultContainer,
-  ResultContent,
-  ResultHeader,
-  ResultMessage,
-  ResultRow,
-  ResultTitle,
-} from '@/styles'
-import type { SearchResponse } from '@/types'
+import type { SearchResponse } from '../types'
 
 type ResultDisplayProps = {
   result: SearchResponse
@@ -21,40 +8,45 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
   const isExactMatch = result.message.includes('Exact match')
 
   return (
-    <ResultContainer>
-      <ResultHeader>
-        {isExactMatch ? (
-          <CheckCircle size={24} color="green" />
-        ) : (
-          <AlertCircle size={24} color="orange" />
-        )}
-        <ResultTitle>Search Result</ResultTitle>
-      </ResultHeader>
+    <div className="result-container">
+      <h2 className="result-title">Search Result</h2>
 
-      <Divider />
+      <div className="result-content">
+        <div className="result-item">
+          <span className="result-label">Value:</span>
+          <span className="result-value">{result.value.toLocaleString()}</span>
+        </div>
 
-      <ResultContent>
-        <ResultRow>
-          <Label>Value:</Label>
-          <Text>{result.value.toLocaleString()}</Text>
-        </ResultRow>
+        <div className="result-item">
+          <span className="result-label">Index:</span>
+          <span className="result-value">{result.index.toLocaleString()}</span>
+        </div>
 
-        <ResultRow>
-          <Label>Index:</Label>
-          <Text>{result.index.toLocaleString()}</Text>
-        </ResultRow>
-
-        <ResultRow>
-          <Label>Type:</Label>
-          <Badge variant={isExactMatch ? 'exact' : 'approximate'}>
+        <div className="result-item">
+          <span className="result-label">Type:</span>
+          <span className="badge">
             {isExactMatch ? 'Exact Match' : 'Approximate Match'}
-          </Badge>
-        </ResultRow>
-      </ResultContent>
+          </span>
+        </div>
+      </div>
 
-      <Divider />
-
-      <ResultMessage>{result.message}</ResultMessage>
-    </ResultContainer>
+      <div
+        style={{
+          marginTop: '1rem',
+          paddingTop: '1rem',
+          borderTop: '1px solid var(--color-border-secondary)',
+        }}
+      >
+        <p
+          style={{
+            margin: 0,
+            color: 'var(--color-text-secondary)',
+            fontSize: 'var(--font-size-sm)',
+          }}
+        >
+          {result.message}
+        </p>
+      </div>
+    </div>
   )
 }

@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { ColorModeButton } from './components/ui/color-mode'
+import { ColorModeButton } from './components/ColorModeButton'
 import { ErrorDisplay } from './components/ErrorDisplay'
 import { ResultDisplay } from './components/ResultDisplay'
 import { SearchForm } from './components/SearchForm'
-import { AppContainer, Container, Header, Subtitle, Title } from './styles'
+import './components.css'
 import type { SearchResponse } from './types'
 
 function App() {
@@ -22,15 +22,15 @@ function App() {
   }
 
   return (
-    <AppContainer>
-      <ColorModeButton position="fixed" top="4" right="4" zIndex="50" />
-      <Container>
-        <Header>
-          <Title>Quick Index Search</Title>
-          <Subtitle>
+    <div className="app-container">
+      <ColorModeButton />
+      <div className="container">
+        <header className="header">
+          <h1 className="title">Quick Index Search</h1>
+          <p className="subtitle">
             Search through 100,000+ sorted numbers with binary search efficiency
-          </Subtitle>
-        </Header>
+          </p>
+        </header>
 
         <SearchForm
           onResult={handleResult}
@@ -41,8 +41,8 @@ function App() {
 
         {result && <ResultDisplay result={result} />}
         {error && <ErrorDisplay error={error} />}
-      </Container>
-    </AppContainer>
+      </div>
+    </div>
   )
 }
 
