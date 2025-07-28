@@ -25,5 +25,4 @@ export const Title = styled.h1`
 
 export const Subtitle = styled.p`
   font-size: 1.125rem;
-  color: #4a5568;
 `

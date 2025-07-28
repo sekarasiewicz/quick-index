@@ -4,7 +4,6 @@ export const ErrorContainer = styled.div`
   max-width: 500px;
   margin: 0 auto;
   padding: 1.5rem;
-  background-color: #fed7d7;
   border: 1px solid #feb2b2;
   border-radius: 0.5rem;
 `

@@ -1,14 +1,9 @@
+import { Button, Input } from '@chakra-ui/react'
 import { Search } from 'lucide-react'
 import { useId, useState } from 'react'
 import { ApiService } from '@/services/api'
 import type { SearchResponse } from '@/types'
-import {
-  FormContent,
-  FormTitle,
-  SearchButton,
-  SearchFormContainer,
-  StyledInput,
-} from '../styles'
+import { FormContent, FormTitle, SearchFormContainer } from '../styles'
 
 type SearchFormProps = {
   onResult: (result: SearchResponse) => void
@@ -57,7 +52,7 @@ export function SearchForm({
     <SearchFormContainer onSubmit={handleSubmit}>
       <FormContent>
         <FormTitle>Search for a value in the dataset</FormTitle>
-        <StyledInput
+        <Input
           id={searchInputId}
           name="searchValue"
           type="number"
@@ -66,10 +61,10 @@ export function SearchForm({
           onChange={(e) => setValue(e.target.value)}
           disabled={isLoading}
         />
-        <SearchButton type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading}>
           <Search size={20} />
           {isLoading ? 'Searching...' : 'Search'}
-        </SearchButton>
+        </Button>
       </FormContent>
     </SearchFormContainer>
   )

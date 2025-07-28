@@ -4,10 +4,8 @@ export const ResultContainer = styled.div`
   max-width: 500px;
   margin: 0 auto;
   padding: 1.5rem;
-  background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `
 
 export const ResultHeader = styled.div`
@@ -37,11 +35,6 @@ export const ResultRow = styled.div`
 
 export const Label = styled.span`
   font-weight: 600;
-  color: #4a5568;
-`
-
-export const Value = styled.span`
-  color: #2d3748;
 `
 
 export const Badge = styled.span<{ variant: 'exact' | 'approximate' }>`
@@ -56,7 +49,6 @@ export const Badge = styled.span<{ variant: 'exact' | 'approximate' }>`
 
 export const ResultMessage = styled.p`
   font-size: 0.875rem;
-  color: #718096;
   font-style: italic;
   margin: 0;
 `

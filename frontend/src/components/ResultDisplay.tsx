@@ -1,5 +1,5 @@
+import { Text } from '@chakra-ui/react'
 import { AlertCircle, CheckCircle } from 'lucide-react'
-import type { SearchResponse } from '@/types'
 import {
   Badge,
   Divider,
@@ -10,8 +10,8 @@ import {
   ResultMessage,
   ResultRow,
   ResultTitle,
-  Value,
-} from '../styles'
+} from '@/styles'
+import type { SearchResponse } from '@/types'
 
 type ResultDisplayProps = {
   result: SearchResponse
@@ -36,12 +36,12 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
       <ResultContent>
         <ResultRow>
           <Label>Value:</Label>
-          <Value>{result.value.toLocaleString()}</Value>
+          <Text>{result.value.toLocaleString()}</Text>
         </ResultRow>
 
         <ResultRow>
           <Label>Index:</Label>
-          <Value>{result.index.toLocaleString()}</Value>
+          <Text>{result.index.toLocaleString()}</Text>
         </ResultRow>
 
         <ResultRow>
