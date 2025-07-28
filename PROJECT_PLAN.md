@@ -84,7 +84,7 @@ quick-index/
 ├── docker/
 │   ├── docker-compose.dev.yml
 │   ├── docker-compose.prod.yml
-│   └── nginx.conf
+│   └── Caddyfile
 ├── Makefile
 ├── README.md
 ├── .gitignore
@@ -155,7 +155,7 @@ quick-index/
 2. **Docker Compose**
    - Development environment setup
    - Production environment setup
-   - Nginx reverse proxy configuration
+   - Caddy reverse proxy configuration
 
 3. **Makefile**
    - Build commands

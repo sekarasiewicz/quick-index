@@ -180,7 +180,7 @@ make run-docker-prod
 
 This starts:
 - Backend API on port 8000
-- Frontend served by Nginx on port 80
+- Frontend served by Caddy on port 80
 - All services in production mode
 
 ### Environment Variables
