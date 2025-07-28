@@ -1,16 +1,17 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { SearchForm } from '@/components/SearchForm'
 
 // Mock fetch globally
-global.fetch = jest.fn()
+global.fetch = vi.fn()
 
 describe('SearchForm', () => {
-  const mockOnResult = jest.fn()
-  const mockOnError = jest.fn()
-  const mockSetIsLoading = jest.fn()
+  const mockOnResult = vi.fn()
+  const mockOnError = vi.fn()
+  const mockSetIsLoading = vi.fn()
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('renders search form with input and button', () => {

@@ -1,8 +1,14 @@
-import { Button } from '@chakra-ui/react'
 import { Search } from 'lucide-react'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { ApiService } from '@/services/api'
 import type { SearchResponse } from '@/types'
+import {
+  FormContent,
+  FormTitle,
+  SearchButton,
+  SearchFormContainer,
+  StyledInput,
+} from '../styles'
 
 type SearchFormProps = {
   onResult: (result: SearchResponse) => void
@@ -18,6 +24,7 @@ export function SearchForm({
   setIsLoading,
 }: SearchFormProps) {
   const [value, setValue] = useState('')
+  const searchInputId = useId()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -28,7 +35,7 @@ export function SearchForm({
     }
 
     const numValue = parseInt(value, 10)
-    if (isNaN(numValue)) {
+    if (Number.isNaN(numValue)) {
       onError('Please enter a valid number')
       return
     }
@@ -47,22 +54,23 @@ export function SearchForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="search-form">
-      <div className="form-content">
-        <h2>Search for a value in the dataset</h2>
-        <input
+    <SearchFormContainer onSubmit={handleSubmit}>
+      <FormContent>
+        <FormTitle>Search for a value in the dataset</FormTitle>
+        <StyledInput
+          id={searchInputId}
+          name="searchValue"
           type="number"
           placeholder="Enter a value (0-1000000)"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           disabled={isLoading}
-          className="search-input"
         />
-        <Button type="submit" disabled={isLoading} className="search-button">
+        <SearchButton type="submit" disabled={isLoading}>
           <Search size={20} />
           {isLoading ? 'Searching...' : 'Search'}
-        </Button>
-      </div>
-    </form>
+        </SearchButton>
+      </FormContent>
+    </SearchFormContainer>
   )
 }

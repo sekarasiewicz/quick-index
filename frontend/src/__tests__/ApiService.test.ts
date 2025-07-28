@@ -1,12 +1,13 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { ApiService } from '@/services/api'
 import type { SearchResponse } from '@/types'
 
 // Mock fetch globally
-global.fetch = jest.fn()
+global.fetch = vi.fn()
 
 describe('ApiService', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   describe('searchValue', () => {
@@ -17,7 +18,7 @@ describe('ApiService', () => {
         message: 'Exact match found',
       }
 
-      ;(fetch as jest.Mock).mockResolvedValueOnce({
+      ;(fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: true,
         json: async () => mockResponse,
       })
@@ -38,7 +39,7 @@ describe('ApiService', () => {
         },
       }
 
-      ;(fetch as jest.Mock).mockResolvedValueOnce({
+      ;(fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: false,
         json: async () => mockErrorResponse,
       })
@@ -54,13 +55,13 @@ describe('ApiService', () => {
 
     it('should throw error when fetch fails', async () => {
       const networkError = new Error('Network error')
-      ;(fetch as jest.Mock).mockRejectedValueOnce(networkError)
+      ;(fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(networkError)
 
       await expect(ApiService.searchValue(500)).rejects.toThrow('Network error')
     })
 
     it('should handle non-Error exceptions', async () => {
-      ;(fetch as jest.Mock).mockRejectedValueOnce('String error')
+      ;(fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce('String error')
 
       await expect(ApiService.searchValue(500)).rejects.toThrow('String error')
     })

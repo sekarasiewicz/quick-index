@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
 import { ErrorDisplay } from '@/components/ErrorDisplay'
 
 describe('ErrorDisplay', () => {

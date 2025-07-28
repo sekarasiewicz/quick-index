@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { ErrorDisplay } from './components/ErrorDisplay'
 import { ResultDisplay } from './components/ResultDisplay'
 import { SearchForm } from './components/SearchForm'
+import { AppContainer, Container, Header, Subtitle, Title } from './styles'
 import type { SearchResponse } from './types'
-import './App.css'
 
 function App() {
   const [result, setResult] = useState<SearchResponse | null>(null)
@@ -21,14 +21,14 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <div className="container">
-        <div className="header">
-          <h1>Quick Index Search</h1>
-          <p>
+    <AppContainer>
+      <Container>
+        <Header>
+          <Title>Quick Index Search</Title>
+          <Subtitle>
             Search through 100,000+ sorted numbers with binary search efficiency
-          </p>
-        </div>
+          </Subtitle>
+        </Header>
 
         <SearchForm
           onResult={handleResult}
@@ -39,8 +39,8 @@ function App() {
 
         {result && <ResultDisplay result={result} />}
         {error && <ErrorDisplay error={error} />}
-      </div>
-    </div>
+      </Container>
+    </AppContainer>
   )
 }
 

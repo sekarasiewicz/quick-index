@@ -1,5 +1,17 @@
 import { AlertCircle, CheckCircle } from 'lucide-react'
 import type { SearchResponse } from '@/types'
+import {
+  Badge,
+  Divider,
+  Label,
+  ResultContainer,
+  ResultContent,
+  ResultHeader,
+  ResultMessage,
+  ResultRow,
+  ResultTitle,
+  Value,
+} from '../styles'
 
 type ResultDisplayProps = {
   result: SearchResponse
@@ -9,40 +21,40 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
   const isExactMatch = result.message.includes('Exact match')
 
   return (
-    <div className="result-display">
-      <div className="result-header">
+    <ResultContainer>
+      <ResultHeader>
         {isExactMatch ? (
           <CheckCircle size={24} color="green" />
         ) : (
           <AlertCircle size={24} color="orange" />
         )}
-        <h3>Search Result</h3>
-      </div>
+        <ResultTitle>Search Result</ResultTitle>
+      </ResultHeader>
 
-      <hr />
+      <Divider />
 
-      <div className="result-content">
-        <div className="result-row">
-          <span className="label">Value:</span>
-          <span className="value">{result.value.toLocaleString()}</span>
-        </div>
+      <ResultContent>
+        <ResultRow>
+          <Label>Value:</Label>
+          <Value>{result.value.toLocaleString()}</Value>
+        </ResultRow>
 
-        <div className="result-row">
-          <span className="label">Index:</span>
-          <span className="value">{result.index.toLocaleString()}</span>
-        </div>
+        <ResultRow>
+          <Label>Index:</Label>
+          <Value>{result.index.toLocaleString()}</Value>
+        </ResultRow>
 
-        <div className="result-row">
-          <span className="label">Type:</span>
-          <span className={`badge ${isExactMatch ? 'exact' : 'approximate'}`}>
+        <ResultRow>
+          <Label>Type:</Label>
+          <Badge variant={isExactMatch ? 'exact' : 'approximate'}>
             {isExactMatch ? 'Exact Match' : 'Approximate Match'}
-          </span>
-        </div>
-      </div>
+          </Badge>
+        </ResultRow>
+      </ResultContent>
 
-      <hr />
+      <Divider />
 
-      <p className="result-message">{result.message}</p>
-    </div>
+      <ResultMessage>{result.message}</ResultMessage>
+    </ResultContainer>
   )
 }
