@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { Search } from 'lucide-react'
+import { useState } from 'react'
 import { ApiService } from '../services/api'
 import type { SearchResponse } from '../types'
 

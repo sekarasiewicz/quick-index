@@ -1,4 +1,4 @@
-import { CheckCircle, AlertCircle } from 'lucide-react'
+import { AlertCircle, CheckCircle } from 'lucide-react'
 import type { SearchResponse } from '../types'
 
 type ResultDisplayProps = {

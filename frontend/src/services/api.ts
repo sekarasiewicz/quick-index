@@ -1,4 +1,4 @@
-import type { SearchResponse, ApiError } from '../types'
+import type { ApiError, SearchResponse } from '../types'
 
 const API_BASE_URL = 'http://localhost:8000/api/v1'
 
