@@ -11,7 +11,7 @@ services:
     environment:
       - NODE_ENV=test
       - CI=true
-    command: bun run test:coverage
+    command: bun run test
     ports:
       - "5174:5174" # Test UI port if needed
     networks:
