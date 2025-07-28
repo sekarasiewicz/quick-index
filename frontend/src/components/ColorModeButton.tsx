@@ -14,17 +14,23 @@ export function ColorModeButton() {
 
     if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
       setIsDark(true)
-      document.documentElement.setAttribute('data-theme', 'dark')
+      document.documentElement.classList.add('dark')
     } else {
       setIsDark(false)
-      document.documentElement.setAttribute('data-theme', 'light')
+      document.documentElement.classList.remove('dark')
     }
   }, [])
 
   const toggleColorMode = () => {
     const newTheme = isDark ? 'light' : 'dark'
     setIsDark(!isDark)
-    document.documentElement.setAttribute('data-theme', newTheme)
+
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+
     localStorage.setItem('theme', newTheme)
   }
 
