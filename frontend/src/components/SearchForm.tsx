@@ -2,6 +2,7 @@ import { Search } from 'lucide-react'
 import { useId, useState } from 'react'
 import { ApiService } from '../services/api'
 import type { SearchResponse } from '../types'
+import { Button } from './ui/button'
 
 type SearchFormProps = {
   onResult: (result: SearchResponse) => void
@@ -47,9 +48,9 @@ export function SearchForm({
   }
 
   return (
-    <form className="search-form-container" onSubmit={handleSubmit}>
-      <div className="form-content">
-        <h2 className="form-title">Search for a value in the dataset</h2>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <h2>Search for a value in the dataset</h2>
         <input
           id={searchInputId}
           name="searchValue"
@@ -60,10 +61,10 @@ export function SearchForm({
           onChange={(e) => setValue(e.target.value)}
           disabled={isLoading}
         />
-        <button type="submit" className="button" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading}>
           <Search size={20} />
           {isLoading ? 'Searching...' : 'Search'}
-        </button>
+        </Button>
       </div>
     </form>
   )
