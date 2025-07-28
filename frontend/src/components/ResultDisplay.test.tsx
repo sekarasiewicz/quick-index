@@ -71,8 +71,23 @@ describe('ResultDisplay', () => {
 
     render(<ResultDisplay result={largeNumberResult} />)
 
-    expect(screen.getByText('1 000 000')).toBeInTheDocument()
-    expect(screen.getByText('50 000')).toBeInTheDocument()
+    // Test that numbers are formatted (with any locale format)
+    expect(
+      screen.getByText((content, element) => {
+        return (
+          element?.textContent === '1,000,000' ||
+          element?.textContent === '1 000 000'
+        )
+      })
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByText((content, element) => {
+        return (
+          element?.textContent === '50,000' || element?.textContent === '50 000'
+        )
+      })
+    ).toBeInTheDocument()
   })
 
   it('handles zero values correctly', () => {

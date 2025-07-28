@@ -49,7 +49,7 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
               Value:
             </span>
             <span className="font-mono text-lg font-semibold">
-              {result.value.toLocaleString()}
+              {result.value.toLocaleString('en-US')}
             </span>
           </div>
 
@@ -58,7 +58,7 @@ export function ResultDisplay({ result }: ResultDisplayProps) {
               Index:
             </span>
             <span className="font-mono text-lg font-semibold">
-              {result.index.toLocaleString()}
+              {result.index.toLocaleString('en-US')}
             </span>
           </div>
 
