@@ -11,11 +11,11 @@ class Settings(BaseModel):
     input_file: str = "data/input.txt"
 
 
-def load_config(config_path: Optional[str] = "config/config.yaml") -> Settings:
-    """Load configuration with environment variables taking precedence over YAML"""
+def load_config(config_path: Optional[str] = None) -> Settings:
+    """Load configuration with environment variables taking precedence over YAML (if provided)"""
     settings = Settings()
 
-    # Load YAML config as defaults (if file exists)
+    # Load YAML config as defaults (if file exists and is provided)
     if config_path and os.path.exists(config_path):
         with open(config_path, "r") as file:
             config_data = yaml.safe_load(file)

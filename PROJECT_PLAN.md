@@ -4,7 +4,7 @@
 A REST service with a single endpoint that efficiently searches for values in a sorted dataset, plus a React frontend to demonstrate the functionality.
 
 ## Data Analysis
-- **Input file**: `input.txt` contains 100,002 sorted numbers from 0 to 1,000,000
+- **Input file**: `backend/data/input.txt` contains 100,002 sorted numbers from 0 to 1,000,000
 - **Format**: One number per line, sorted in ascending order
 - **Range**: 0, 100, 200, 300, ..., 1,000,000
 - **Total entries**: 100,002 (indices 0 to 100,001)
@@ -58,7 +58,6 @@ quick-index/
 │   ├── data/
 │   │   └── input.txt
 │   ├── config/
-│   │   └── config.yaml
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   └── pyproject.toml

@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react'
 import { ApiService } from '../services/api'
 import type {
   AppError,
-  LoadingState,
   LoadingStateWithData,
   SearchParams,
   SearchResponse,

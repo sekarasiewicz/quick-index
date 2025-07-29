@@ -35,4 +35,4 @@ So all search operations should be optimized for that particular slice.
 - Remember that code structure matters
 - Upload solution into `GitHub` account and share the link
 
-Sample input file is added as `input.txt` file.
+Sample input file is added as `backend/data/input.txt` file.

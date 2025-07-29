@@ -31,12 +31,14 @@ class TestConfig:
             config_path = f.name
 
         try:
-            settings = load_config(config_path)
+            # Clear environment variables to test pure YAML loading
+            with patch.dict(os.environ, {}, clear=True):
+                settings = load_config(config_path)
 
-            assert settings.server_port == 9000
-            assert settings.server_host == "127.0.0.1"
-            assert settings.log_level == "ERROR"
-            assert settings.input_file == "test/data.txt"
+                assert settings.server_port == 9000
+                assert settings.server_host == "127.0.0.1"
+                assert settings.log_level == "ERROR"
+                assert settings.input_file == "test/data.txt"
         finally:
             os.unlink(config_path)
 
@@ -94,13 +96,15 @@ class TestConfig:
 
     def test_missing_yaml_file(self):
         """Test behavior when YAML config file doesn't exist"""
-        settings = load_config("nonexistent_file.yaml")
+        # Clear environment variables that might interfere with defaults
+        with patch.dict(os.environ, {}, clear=True):
+            settings = load_config("nonexistent_file.yaml")
 
-        # Should use default values
-        assert settings.server_port == 8000
-        assert settings.server_host == "0.0.0.0"
-        assert settings.log_level == "INFO"
-        assert settings.input_file == "data/input.txt"
+            # Should use default values
+            assert settings.server_port == 8000
+            assert settings.server_host == "0.0.0.0"
+            assert settings.log_level == "INFO"
+            assert settings.input_file == "data/input.txt"
 
     def test_partial_yaml_config(self):
         """Test loading YAML config with only some sections"""
@@ -111,13 +115,15 @@ class TestConfig:
             config_path = f.name
 
         try:
-            settings = load_config(config_path)
+            # Clear environment variables to test pure YAML loading
+            with patch.dict(os.environ, {}, clear=True):
+                settings = load_config(config_path)
 
-            # Should use YAML value for port, defaults for others
-            assert settings.server_port == 9000
-            assert settings.server_host == "0.0.0.0"  # default
-            assert settings.log_level == "INFO"  # default
-            assert settings.input_file == "data/input.txt"  # default
+                # Should use YAML value for port, defaults for others
+                assert settings.server_port == 9000
+                assert settings.server_host == "0.0.0.0"  # default
+                assert settings.log_level == "INFO"  # default
+                assert settings.input_file == "data/input.txt"  # default
         finally:
             os.unlink(config_path)
 

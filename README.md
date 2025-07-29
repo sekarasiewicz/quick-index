@@ -106,9 +106,9 @@ LOG_LEVEL=INFO  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
 INPUT_FILE=data/input.txt
 ```
 
-### YAML Configuration (Fallback)
+### YAML Configuration (Optional)
 
-Backend configuration can also be set in `backend/config/config.yaml`:
+Backend configuration can optionally be set in a YAML file if needed:
 
 ```yaml
 server:
@@ -119,6 +119,8 @@ logging:
 data:
   input_file: "data/input.txt"
 ```
+
+Note: Environment variables always take precedence over YAML configuration.
 
 ### Docker Environment
 
