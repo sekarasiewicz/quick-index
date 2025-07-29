@@ -192,6 +192,16 @@ make stop-docker
 make clean
 ```
 
+### Custom Environment Variables
+
+You can override environment variables directly when running the Makefile targets:
+
+```bash
+# Override any environment variable
+SERVER_PORT=9000 LOG_LEVEL=DEBUG make run-docker-dev
+INPUT_FILE=/custom/path/data.txt make run-docker-prod
+```
+
 ## Testing Status
 
 ### Backend Tests ✅
