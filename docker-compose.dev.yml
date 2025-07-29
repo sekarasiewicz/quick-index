@@ -9,9 +9,10 @@ services:
       - ./backend:/app
     environment:
       - PYTHONPATH=/app
-      - SERVER_PORT=8000
-      - SERVER_HOST=0.0.0.0
-      - LOG_LEVEL=DEBUG
+      - SERVER_PORT=${SERVER_PORT:-8000}
+      - SERVER_HOST=${SERVER_HOST:-0.0.0.0}
+      - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
+      - INPUT_FILE=${INPUT_FILE:-data/input.txt}
     # Remove the command override since it's now in Dockerfile.dev
 
   frontend:
@@ -26,4 +27,4 @@ services:
     depends_on:
       - backend
     environment:
-      - VITE_API_URL=http://localhost:8000 
+      - VITE_API_URL=${VITE_API_URL:-http://localhost:8000} 

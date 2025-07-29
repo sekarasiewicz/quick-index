@@ -92,7 +92,31 @@ The backend supports both YAML configuration files and environment variables, wi
 
 ### Environment Variables (Recommended)
 
-The following environment variables can be set:
+Environment variables can be set in several ways:
+
+#### 1. `.env` file (Recommended for Docker Compose)
+
+Create a `.env` file in the project root (copy from `.env.example`):
+
+```bash
+# Backend Configuration
+SERVER_PORT=8000
+SERVER_HOST=0.0.0.0
+LOG_LEVEL=INFO
+INPUT_FILE=data/input.txt
+
+# Frontend Configuration
+VITE_API_URL=http://localhost:8000
+
+# Development overrides (uncomment to use)
+# LOG_LEVEL=DEBUG
+# SERVER_PORT=9000
+# VITE_API_URL=http://localhost:9000
+```
+
+#### 2. System Environment Variables
+
+You can also set environment variables directly:
 
 ```bash
 # Server Configuration

@@ -7,9 +7,10 @@ services:
       - "8000:8000"
     environment:
       - PYTHONPATH=/app
-      - SERVER_PORT=8000
-      - SERVER_HOST=0.0.0.0
-      - LOG_LEVEL=INFO
+      - SERVER_PORT=${SERVER_PORT:-8000}
+      - SERVER_HOST=${SERVER_HOST:-0.0.0.0}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - INPUT_FILE=${INPUT_FILE:-data/input.txt}
     restart: unless-stopped
 
   frontend:
