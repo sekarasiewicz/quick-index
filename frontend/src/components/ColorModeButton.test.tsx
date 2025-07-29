@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { cleanupDOM } from '@/test/setup'
 import { ColorModeButton } from './ColorModeButton'
 
 // Mock localStorage
@@ -25,6 +26,7 @@ const matchMediaMock = vi.fn().mockImplementation((query) => ({
 describe('ColorModeButton', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    cleanupDOM()
 
     // Setup localStorage mock
     Object.defineProperty(window, 'localStorage', {
@@ -35,24 +37,12 @@ describe('ColorModeButton', () => {
     // Setup matchMedia mock to return false by default (light mode preference)
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
-      value: vi.fn().mockImplementation((query) => ({
-        matches: false, // Default to light mode preference
-        media: query,
-        onchange: null,
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-      })),
+      value: matchMediaMock,
     })
-
-    // Clear document classes
-    document.documentElement.classList.remove('dark')
   })
 
   afterEach(() => {
-    document.documentElement.classList.remove('dark')
+    cleanupDOM()
   })
 
   it('renders the color mode button', () => {

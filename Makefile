@@ -22,6 +22,15 @@ stop-docker: ## Stop Docker containers
 clean: ## Clean up generated files
 	docker system prune -f
 
+test: ## Run frontend tests locally
+	cd frontend && npm test
+
+test-watch: ## Run frontend tests locally with watch mode
+	cd frontend && npm run test:watch
+
+test-coverage: ## Run frontend tests with coverage
+	cd frontend && npm run test:coverage
+
 test-docker: ## Run frontend tests in Docker
 	docker compose -f docker-compose.test.yml up frontend-test --build --abort-on-container-exit
 
