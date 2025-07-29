@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -7,8 +5,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    volumes:
-      - ./input.txt:/app/data/input.txt
     environment:
       - PYTHONPATH=/app
     restart: unless-stopped

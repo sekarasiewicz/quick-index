@@ -87,8 +87,7 @@ quick-index/
 │   └── Caddyfile
 ├── Makefile
 ├── README.md
-├── .gitignore
-└── input.txt
+└── .gitignore
 ```
 
 ## Implementation Plan
