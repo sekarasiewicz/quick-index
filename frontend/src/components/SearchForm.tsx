@@ -3,7 +3,7 @@ import { Search } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { type SearchFormData, searchSchema } from '@/lib/schemas'
 import { ApiService } from '@/services/api'
-import type { SearchResponse } from '@/types'
+import type { AppError, SearchResponse } from '@/types'
 import { Button } from './ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 import { Form } from './ui/form'
@@ -29,7 +29,7 @@ export function SearchForm({
     },
   })
 
-  const onSubmit = async (data: SearchFormData) => {
+  const onSubmit = async (data: SearchFormData): Promise<void> => {
     const numValue = parseInt(data.searchValue, 10)
 
     setIsLoading(true)
@@ -37,8 +37,15 @@ export function SearchForm({
       const result = await ApiService.searchValue(numValue)
       onResult(result)
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'An error occurred'
+      let errorMessage = 'An error occurred'
+
+      if (error && typeof error === 'object' && 'type' in error) {
+        const appError = error as AppError
+        errorMessage = appError.message
+      } else if (error instanceof Error) {
+        errorMessage = error.message
+      }
+
       onError(errorMessage)
     } finally {
       setIsLoading(false)

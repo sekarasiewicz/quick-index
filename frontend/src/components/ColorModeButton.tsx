@@ -1,37 +1,48 @@
 import { Moon, Sun } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { themeStorage } from '../lib/storage'
+import type { Theme, ThemeState } from '../types'
 import { Button } from './ui/button'
 
 export function ColorModeButton() {
-  const [isDark, setIsDark] = useState(false)
+  const [themeState, setThemeState] = useState<ThemeState>({
+    theme: 'system',
+    isDark: false,
+  })
 
   useEffect(() => {
     // Check if user has a saved preference
-    const savedTheme = localStorage.getItem('theme')
+    const savedTheme = themeStorage.get()
     const prefersDark = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches
 
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setIsDark(true)
+    const currentTheme: Theme = savedTheme || 'system'
+    const isDark =
+      currentTheme === 'dark' || (currentTheme === 'system' && prefersDark)
+
+    setThemeState({ theme: currentTheme, isDark })
+
+    if (isDark) {
       document.documentElement.classList.add('dark')
     } else {
-      setIsDark(false)
       document.documentElement.classList.remove('dark')
     }
   }, [])
 
-  const toggleColorMode = () => {
-    const newTheme = isDark ? 'light' : 'dark'
-    setIsDark(!isDark)
+  const toggleColorMode = (): void => {
+    const newTheme: Theme = themeState.isDark ? 'light' : 'dark'
+    const newIsDark = !themeState.isDark
 
-    if (newTheme === 'dark') {
+    setThemeState({ theme: newTheme, isDark: newIsDark })
+
+    if (newIsDark) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
 
-    localStorage.setItem('theme', newTheme)
+    themeStorage.set(newTheme)
   }
 
   return (
@@ -41,9 +52,11 @@ export function ColorModeButton() {
       size="icon"
       onClick={toggleColorMode}
       className="fixed top-4 right-4 z-50"
-      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={
+        themeState.isDark ? 'Switch to light mode' : 'Switch to dark mode'
+      }
     >
-      {isDark ? <Sun size={20} /> : <Moon size={20} />}
+      {themeState.isDark ? <Sun size={20} /> : <Moon size={20} />}
     </Button>
   )
 }

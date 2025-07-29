@@ -3,21 +3,27 @@ import { ColorModeButton } from './components/ColorModeButton'
 import { ErrorDisplay } from './components/ErrorDisplay'
 import { ResultDisplay } from './components/ResultDisplay'
 import { SearchForm } from './components/SearchForm'
-import type { SearchResponse } from './types'
+import type { LoadingState, SearchResponse } from './types'
 
 function App() {
   const [result, setResult] = useState<SearchResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [loadingState, setLoadingState] = useState<LoadingState>('idle')
 
-  const handleResult = (searchResult: SearchResponse) => {
+  const handleResult = (searchResult: SearchResponse): void => {
     setResult(searchResult)
     setError(null)
+    setLoadingState('success')
   }
 
-  const handleError = (errorMessage: string) => {
+  const handleError = (errorMessage: string): void => {
     setError(errorMessage)
     setResult(null)
+    setLoadingState('error')
+  }
+
+  const handleLoadingChange = (isLoading: boolean): void => {
+    setLoadingState(isLoading ? 'loading' : 'idle')
   }
 
   return (
@@ -37,8 +43,8 @@ function App() {
           <SearchForm
             onResult={handleResult}
             onError={handleError}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
+            isLoading={loadingState === 'loading'}
+            setIsLoading={handleLoadingChange}
           />
 
           {result && <ResultDisplay result={result} />}
