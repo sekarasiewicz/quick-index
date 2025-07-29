@@ -38,6 +38,10 @@ services:
       dockerfile: Dockerfile
     environment:
       - PYTHONPATH=/app
+      - SERVER_PORT=8000
+      - SERVER_HOST=0.0.0.0
+      - LOG_LEVEL=DEBUG
+      - INPUT_FILE=data/input.txt
     command: python -m pytest tests/ -v
     networks:
       - test-network
@@ -48,6 +52,10 @@ services:
       dockerfile: Dockerfile
     environment:
       - PYTHONPATH=/app
+      - SERVER_PORT=8000
+      - SERVER_HOST=0.0.0.0
+      - LOG_LEVEL=DEBUG
+      - INPUT_FILE=data/input.txt
     command: python -m pytest tests/ -v --tb=short
     volumes:
       - ./backend:/app

@@ -88,7 +88,27 @@ Returns: `{"status": "healthy"}`
 
 ## Configuration
 
-Backend configuration is in `backend/config/config.yaml`:
+The backend supports both YAML configuration files and environment variables, with environment variables taking precedence.
+
+### Environment Variables (Recommended)
+
+The following environment variables can be set:
+
+```bash
+# Server Configuration
+SERVER_PORT=8000
+SERVER_HOST=0.0.0.0
+
+# Logging Configuration  
+LOG_LEVEL=INFO  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+# Data Configuration
+INPUT_FILE=data/input.txt
+```
+
+### YAML Configuration (Fallback)
+
+Backend configuration can also be set in `backend/config/config.yaml`:
 
 ```yaml
 server:
@@ -99,6 +119,13 @@ logging:
 data:
   input_file: "data/input.txt"
 ```
+
+### Docker Environment
+
+Environment variables are automatically set in Docker Compose files:
+- **Development**: `docker-compose.dev.yml` (LOG_LEVEL=DEBUG)
+- **Production**: `docker-compose.prod.yml` (LOG_LEVEL=INFO)  
+- **Testing**: `docker-compose.test.yml` (LOG_LEVEL=DEBUG)
 
 ## Development
 
@@ -185,10 +212,17 @@ This starts:
 
 ### Environment Variables
 
-For production deployment, consider setting:
-- `LOG_LEVEL`: Logging level (DEBUG, INFO, ERROR)
-- `API_HOST`: Backend host address
-- `API_PORT`: Backend port
+For production deployment, you can override the default environment variables:
+
+```bash
+# Override default settings
+export SERVER_PORT=9000
+export LOG_LEVEL=ERROR
+export INPUT_FILE=/custom/path/data.txt
+
+# Then run with custom settings
+make run-docker-prod
+```
 
 ## Contributing
 

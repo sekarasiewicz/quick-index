@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 import yaml
 import os
+from typing import Optional
 
 
 class Settings(BaseModel):
@@ -10,11 +11,12 @@ class Settings(BaseModel):
     input_file: str = "data/input.txt"
 
 
-def load_config(config_path: str = "config/config.yaml") -> Settings:
-    """Load configuration from YAML file"""
+def load_config(config_path: Optional[str] = "config/config.yaml") -> Settings:
+    """Load configuration with environment variables taking precedence over YAML"""
     settings = Settings()
 
-    if os.path.exists(config_path):
+    # Load YAML config as defaults (if file exists)
+    if config_path and os.path.exists(config_path):
         with open(config_path, "r") as file:
             config_data = yaml.safe_load(file)
 
@@ -29,6 +31,27 @@ def load_config(config_path: str = "config/config.yaml") -> Settings:
             settings.input_file = config_data["data"].get(
                 "input_file", "data/input.txt"
             )
+
+    # Environment variables override YAML config
+    # Server settings
+    if os.getenv("SERVER_PORT"):
+        try:
+            settings.server_port = int(os.getenv("SERVER_PORT"))
+        except ValueError:
+            pass  # Keep default if invalid
+
+    if os.getenv("SERVER_HOST"):
+        settings.server_host = os.getenv("SERVER_HOST")
+
+    # Logging settings
+    if os.getenv("LOG_LEVEL"):
+        log_level = os.getenv("LOG_LEVEL").upper()
+        if log_level in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]:
+            settings.log_level = log_level
+
+    # Data settings
+    if os.getenv("INPUT_FILE"):
+        settings.input_file = os.getenv("INPUT_FILE")
 
     return settings
 
