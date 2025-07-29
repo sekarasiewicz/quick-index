@@ -79,19 +79,43 @@ class TestSearchAPI:
         response = client.get("/api/v1/search/abc")
 
         assert response.status_code == 422  # Validation error
+        data = response.json()
+        # FastAPI's automatic validation returns a list format for parsing errors
+        assert "detail" in data
+        # Check if it's FastAPI's automatic validation or our custom validation
+        if isinstance(data["detail"], list):
+            # FastAPI's automatic validation format
+            assert data["detail"][0]["type"] == "int_parsing"
+        else:
+            # Our custom validation format
+            assert data["detail"]["error"] == "Validation error"
 
     def test_search_negative_number(self):
         """Test search endpoint with negative number"""
         response = client.get("/api/v1/search/-100")
 
-        # Should be valid input (negative numbers are allowed)
-        assert response.status_code in [200, 404]  # Either success or not found
+        assert response.status_code == 422  # Validation error
+        data = response.json()
+        assert data["detail"]["error"] == "Validation error"
+        assert "non-negative" in data["detail"]["message"]
 
     def test_search_large_number(self):
         """Test search endpoint with very large number"""
-        response = client.get("/api/v1/search/999999999")
+        response = client.get("/api/v1/search/1000001")
 
-        # Should be valid input (large numbers are allowed)
+        assert response.status_code == 422  # Validation error
+        data = response.json()
+        assert data["detail"]["error"] == "Validation error"
+        assert "1,000,000" in data["detail"]["message"]
+
+    def test_search_boundary_values(self):
+        """Test search endpoint with boundary values"""
+        # Test minimum valid value
+        response = client.get("/api/v1/search/0")
+        assert response.status_code in [200, 404]  # Either success or not found
+
+        # Test maximum valid value
+        response = client.get("/api/v1/search/1000000")
         assert response.status_code in [200, 404]  # Either success or not found
 
     def test_root_endpoint(self):
