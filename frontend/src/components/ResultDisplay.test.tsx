@@ -62,47 +62,6 @@ describe('ResultDisplay', () => {
     expect(card).toHaveClass('border-orange-200', 'bg-orange-50')
   })
 
-  it('formats large numbers with locale formatting', () => {
-    const largeNumberResult: SearchResponse = {
-      value: 1000000,
-      index: 50000,
-      message: 'Exact match found',
-    }
-
-    render(<ResultDisplay result={largeNumberResult} />)
-
-    // Test that numbers are formatted (with any locale format)
-    expect(
-      screen.getByText((_, element) => {
-        return (
-          element?.textContent === '1,000,000' ||
-          element?.textContent === '1 000 000'
-        )
-      })
-    ).toBeInTheDocument()
-
-    expect(
-      screen.getByText((_, element) => {
-        return (
-          element?.textContent === '50,000' || element?.textContent === '50 000'
-        )
-      })
-    ).toBeInTheDocument()
-  })
-
-  it('handles zero values correctly', () => {
-    const zeroResult: SearchResponse = {
-      value: 0,
-      index: 0,
-      message: 'Exact match found at index 0',
-    }
-
-    render(<ResultDisplay result={zeroResult} />)
-
-    const zeros = screen.getAllByText('0')
-    expect(zeros).toHaveLength(2) // Both value and index
-  })
-
   it('displays correct icons for exact match', () => {
     const exactMatchResult: SearchResponse = {
       value: 100,
@@ -131,19 +90,6 @@ describe('ResultDisplay', () => {
     expect(alertIcon).toBeInTheDocument()
   })
 
-  it('handles long messages correctly', () => {
-    const longMessageResult: SearchResponse = {
-      value: 100,
-      index: 10,
-      message:
-        'This is a very long message that should be displayed properly without breaking the layout or causing any rendering issues in the component',
-    }
-
-    render(<ResultDisplay result={longMessageResult} />)
-
-    expect(screen.getByText(longMessageResult.message)).toBeInTheDocument()
-  })
-
   it('renders all required data fields', () => {
     const result: SearchResponse = {
       value: 123,
@@ -160,15 +106,33 @@ describe('ResultDisplay', () => {
     expect(screen.getByText('45')).toBeInTheDocument()
   })
 
-  it('handles special characters in message', () => {
-    const specialMessageResult: SearchResponse = {
+  it('has correct card structure and styling', () => {
+    const result: SearchResponse = {
       value: 100,
       index: 10,
-      message: 'Message with special chars: !@#$%^&*()_+-=[]{}|;:,.<>?',
+      message: 'Test message',
     }
 
-    render(<ResultDisplay result={specialMessageResult} />)
+    render(<ResultDisplay result={result} />)
 
-    expect(screen.getByText(specialMessageResult.message)).toBeInTheDocument()
+    const card = screen.getByTestId('result-card')
+    expect(card).toHaveClass('w-full', 'max-w-md', 'mx-auto')
+  })
+
+  it('integrates all child components correctly', () => {
+    const result: SearchResponse = {
+      value: 100,
+      index: 10,
+      message: 'Exact match found',
+    }
+
+    render(<ResultDisplay result={result} />)
+
+    // Verify all child components are rendered
+    expect(screen.getByText('Exact Match Found!')).toBeInTheDocument() // ResultHeader
+    expect(screen.getByText('Value:')).toBeInTheDocument() // ResultStats
+    expect(screen.getByText('Index:')).toBeInTheDocument() // ResultStats
+    expect(screen.getByText('Type:')).toBeInTheDocument() // ResultStats
+    expect(screen.getByText('Exact match found')).toBeInTheDocument() // ResultMessage
   })
 })

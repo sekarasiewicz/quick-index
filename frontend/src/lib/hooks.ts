@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react'
-import { ApiService } from '../services/api'
+import { ApiService } from '@/services/api'
 import type {
   AppError,
   LoadingStateWithData,
   SearchParams,
   SearchResponse,
-} from '../types'
+} from '@/types'
 
 // Custom hook for managing loading states with data
 export function useLoadingState<T>() {

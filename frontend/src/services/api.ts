@@ -1,4 +1,11 @@
-import type { ApiError, SearchResponse, AppError, NetworkError, ServerError, SearchParams } from '../types'
+import type {
+  ApiError,
+  AppError,
+  NetworkError,
+  SearchParams,
+  SearchResponse,
+  ServerError,
+} from '@/types'
 
 const API_BASE_URL = 'http://localhost:8000/api/v1'
 
@@ -26,7 +33,7 @@ export const ApiService = {
 
       if (!response.ok) {
         let errorMessage = `HTTP ${response.status}: ${response.statusText}`
-        
+
         try {
           const errorData: ApiError = await response.json()
           errorMessage = errorData.detail.message || errorMessage
@@ -34,7 +41,10 @@ export const ApiService = {
           // If we can't parse the error response, use the default message
         }
 
-        const appError: AppError = createServerError(errorMessage, response.status)
+        const appError: AppError = createServerError(
+          errorMessage,
+          response.status
+        )
         throw appError
       }
 
@@ -42,31 +52,35 @@ export const ApiService = {
       return data
     } catch (error) {
       if (error instanceof TypeError && error.message.includes('fetch')) {
-        const networkError: AppError = createNetworkError('Network error: Unable to connect to the server')
+        const networkError: AppError = createNetworkError(
+          'Network error: Unable to connect to the server'
+        )
         throw networkError
       }
-      
+
       if (error && typeof error === 'object' && 'type' in error) {
         throw error as AppError
       }
-      
-      const unknownError: AppError = createNetworkError('An unexpected error occurred')
+
+      const unknownError: AppError = createNetworkError(
+        'An unexpected error occurred'
+      )
       throw unknownError
     }
   },
 
   async searchValueWithParams(params: SearchParams): Promise<SearchResponse> {
     const { value, tolerance } = params
-    const url = tolerance 
+    const url = tolerance
       ? `${API_BASE_URL}/search/${value}?tolerance=${tolerance}`
       : `${API_BASE_URL}/search/${value}`
-    
+
     try {
       const response = await fetch(url)
 
       if (!response.ok) {
         let errorMessage = `HTTP ${response.status}: ${response.statusText}`
-        
+
         try {
           const errorData: ApiError = await response.json()
           errorMessage = errorData.detail.message || errorMessage
@@ -74,7 +88,10 @@ export const ApiService = {
           // If we can't parse the error response, use the default message
         }
 
-        const appError: AppError = createServerError(errorMessage, response.status)
+        const appError: AppError = createServerError(
+          errorMessage,
+          response.status
+        )
         throw appError
       }
 
@@ -82,16 +99,20 @@ export const ApiService = {
       return data
     } catch (error) {
       if (error instanceof TypeError && error.message.includes('fetch')) {
-        const networkError: AppError = createNetworkError('Network error: Unable to connect to the server')
+        const networkError: AppError = createNetworkError(
+          'Network error: Unable to connect to the server'
+        )
         throw networkError
       }
-      
+
       if (error && typeof error === 'object' && 'type' in error) {
         throw error as AppError
       }
-      
-      const unknownError: AppError = createNetworkError('An unexpected error occurred')
+
+      const unknownError: AppError = createNetworkError(
+        'An unexpected error occurred'
+      )
       throw unknownError
     }
   },
-} 
+}

@@ -1,4 +1,4 @@
-import type { StorageKey, StorageValue, Theme } from '../types'
+import type { StorageKey, StorageValue, Theme } from '@/types'
 
 // Type-safe localStorage wrapper
 export class StorageManager {

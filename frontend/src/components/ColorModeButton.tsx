@@ -1,7 +1,7 @@
 import { Moon, Sun } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { themeStorage } from '../lib/storage'
-import type { Theme, ThemeState } from '../types'
+import { themeStorage } from '@/lib/storage'
+import type { Theme, ThemeState } from '@/types'
 import { Button } from './ui/button'
 
 export function ColorModeButton() {

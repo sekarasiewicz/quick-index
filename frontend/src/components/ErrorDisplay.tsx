@@ -24,7 +24,7 @@ export function ErrorDisplay({ error }: ErrorDisplayProps) {
             className="text-red-500 dark:text-red-400 mt-0.5 flex-shrink-0"
             data-testid="alert-circle-icon"
           />
-          <p 
+          <p
             className="text-sm text-red-700 dark:text-red-300 leading-relaxed"
             data-testid="error-message"
           >
