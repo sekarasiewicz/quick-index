@@ -27,6 +27,11 @@ services:
     command: npm run test:watch
     ports:
       - "5174:5174"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    tty: true
+    stdin_open: true
     networks:
       - test-network
 
@@ -54,9 +59,11 @@ services:
       - SERVER_HOST=${SERVER_HOST:-0.0.0.0}
       - LOG_LEVEL=${LOG_LEVEL:-DEBUG}
       - INPUT_FILE=${INPUT_FILE:-data/input.txt}
-    command: python -m pytest tests/ -v --tb=short
+    command: ptw tests/ -- -v --tb=short
     volumes:
       - ./backend:/app
+    tty: true
+    stdin_open: true
     networks:
       - test-network
 
