@@ -2,7 +2,6 @@ import os
 import tempfile
 import yaml
 from unittest.mock import patch
-import pytest
 from app.config import load_config, Settings
 
 

@@ -1,5 +1,4 @@
 from fastapi import APIRouter, HTTPException, Path, Depends
-from pydantic import Field, ValidationError
 from ..models import SearchResponse, ErrorResponse
 from ..services.search_service import SearchService
 from ..utils.logger import logger
